@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kenalan Yuk - Alfito</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    body {
+        background: #0a0e17;
+        color: #e8ecf5;
+        overflow-x: hidden;
+    }
+
+    /* ===== LATAR ANIMASI ===== */
+    .bg-blob {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: 0.55;
+        z-index: 0;
+        animation: float 12s ease-in-out infinite;
+    }
+    .blob1 {
+        width: 380px; height: 380px;
+        background: #1976d2;
+        top: -100px; left: -100px;
+        animation-delay: 0s;
+    }
+    .blob2 {
+        width: 300px; height: 300px;
+        background: #ffffff;
+        top: 40%; right: -120px;
+        animation-delay: 2s;
+    }
+    .blob3 {
+        width: 340px; height: 340px;
+        background: #2196f3;
+        bottom: -120px; left: 20%;
+        animation-delay: 4s;
+    }
+    .blob4 {
+        width: 220px; height: 220px;
+        background: #0d47a1;
+        top: 15%; right: 20%;
+        animation-delay: 1s;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translate(0,0) scale(1); }
+        33% { transform: translate(30px,-40px) scale(1.1); }
+        66% { transform: translate(-20px,30px) scale(0.95); }
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 8%;
+        backdrop-filter: blur(10px);
+        background: rgba(10,14,23,0.6);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    nav .logo { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 1px; }
+    nav .logo span { color: #2196f3; }
+    nav ul { list-style: none; display: flex; gap: 28px; }
+    nav ul li a {
+        color: #cfd8e3;
+        text-decoration: none;
+        font-size: 15px;
+        transition: color 0.3s;
+    }
+    nav ul li a:hover { color: #2196f3; }
+
+    /* ===== HERO ===== */
+    .hero {
+        position: relative;
+        z-index: 5;
+        min-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 60px 6%;
+    }
+
+    .profile-box {
+        width: 190px;
+        height: 190px;
+        border-radius: 50%;
+        border: 3px solid #2196f3;
+        box-shadow: 0 0 40px rgba(33,150,243,0.5);
+        overflow: hidden;
+        margin-bottom: 28px;
+        background: #14192b;
+    }
+    .profile-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .hero h1 {
+        font-size: clamp(34px,7vw,58px);
+        color: #ffffff;
+        margin-bottom: 8px;
+        letter-spacing: 0.5px;
+    }
+    .hero h1 span { color: #2196f3; }
+
+    .hero h2 {
+        font-size: 18px;
+        font-weight: 400;
+        color: #93a4bd;
+        margin-bottom: 18px;
+    }
+
+    .hero p {
+        max-width: 560px;
+        color: #b7c2d6;
+        line-height: 1.7;
+        font-size: 15px;
+        margin-bottom: 28px;
+    }
+
+    .btn {
+        display: inline-block;
+        background: #2196f3;
+        color: #fff;
+        padding: 13px 32px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        box-shadow: 0 8px 25px rgba(33,150,243,0.4);
+        transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(33,150,243,0.55); }
+
+    /* ===== SECTION UMUM ===== */
+    section {
+        position: relative;
+        z-index: 5;
+        padding: 70px 8%;
+    }
+    .section-title {
+        font-size: 30px;
+        color: #fff;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .section-title span { color: #2196f3; }
+    .section-sub {
+        text-align: center;
+        color: #8291a8;
+        margin-bottom: 45px;
+        font-size: 15px;
+    }
+
+    /* ===== CARD GRID ===== */
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+        gap: 18px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    .card {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 16px;
+        padding: 24px 18px;
+        text-align: center;
+        transition: transform 0.3s, border-color 0.3s;
+    }
+    .card:hover { transform: translateY(-6px); border-color: #2196f3; }
+    .card .icon { font-size: 30px; margin-bottom: 10px; }
+    .card h3 { font-size: 16px; color: #fff; margin-bottom: 6px; }
+    .card p { font-size: 13px; color: #93a4bd; }
+
+    /* ===== INFO TABLE (Sekolah, Domisili) ===== */
+    .info-wrap {
+        max-width: 600px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 12px;
+        padding: 16px 22px;
+    }
+    .info-row .label { color: #7c8aa3; font-size: 13px; }
+    .info-row .value { color: #fff; font-weight: 600; font-size: 15px; text-align: right; }
+
+    /* ===== FAVORIT ===== */
+    .fav-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+        gap: 16px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .fav-card {
+        background: linear-gradient(145deg, rgba(33,150,243,0.12), rgba(255,255,255,0.03));
+        border: 1px solid rgba(33,150,243,0.25);
+        border-radius: 14px;
+        padding: 20px;
+        text-align: center;
+    }
+    .fav-card .icon { font-size: 26px; margin-bottom: 8px; }
+    .fav-card .cat { font-size: 12px; color: #7c8aa3; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .fav-card .val { color: #fff; font-weight: 600; font-size: 14px; }
+
+    /* ===== KONTAK ===== */
+    .contact-wrap {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        flex-wrap: wrap;
+    }
+    .contact-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: #fff;
+        text-decoration: none;
+        padding: 14px 26px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: border-color 0.3s, transform 0.3s;
+    }
+    .contact-btn:hover { border-color: #2196f3; transform: translateY(-4px); }
+    .contact-btn .icon { font-size: 20px; }
+
+    footer {
+        position: relative;
+        z-index: 5;
+        text-align: center;
+        padding: 30px;
+        color: #5c6b85;
+        font-size: 13px;
+        border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    @media (max-width: 600px) {
+        nav ul { gap: 14px; }
+        nav ul li a { font-size: 13px; }
+    }
+</style>
+</head>
+<body>
+    <div class="bg-blob blob1"></div>
+    <div class="bg-blob blob2"></div>
+    <div class="bg-blob blob3"></div>
+    <div class="bg-blob blob4"></div>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav>
+        <div class="logo">Kenalan<span>.</span></div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#tentang">Tentang</a></li>
+            <li><a href="#hobi">Hobi</a></li>
+            <li><a href="#favorit">Favorit</a></li>
+            <li><a href="#kontak">Kontak</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="home">
+        <!--
+        GANTI FOTO:
+        Buat folder "foto" lalu masukkan foto dengan nama: profile.jpg
+        Kemudian ubah src menjadi: foto/profile.jpg
+        -->
+        <div class="profile-box">
+            <img src="fitonih.jpg" alt="Foto Alfito">
+        </div>
+        <h1>Halo, Aku <span>Fito!</span></h1>
+        <h2>Alfito Ghavin Setyadi</h2>
+        <p>
+            Selamat datang di halaman perkenalanku. Aku suka ngoding dan
+            ngedit-ngedit website, dan halaman ini aku buat sendiri buat
+            cerita sedikit tentang diriku, hobi, dan hal-hal yang aku suka.
+        </p>
+        <a href="#tentang" class="btn">Kenalan Lebih Jauh ↓</a>
+    </section>
+
+    <!-- ===== TENTANG / INFO ===== -->
+    <section id="tentang">
+        <h2 class="section-title">Tentang <span>Aku</span></h2>
+        <p class="section-sub">Sedikit data diri</p>
+        <div class="info-wrap">
+            <div class="info-row"><span class="label">Nama Lengkap</span><span class="value">Alfito Ghavin Setyadi</span></div>
+            <div class="info-row"><span class="label">Panggilan</span><span class="value">Fito</span></div>
+            <div class="info-row"><span class="label">Sekolah</span><span class="value">SMP Muhammadiyah 1 Yogyakarta</span></div>
+            <div class="info-row"><span class="label">Domisili</span><span class="value">Yogyakarta</span></div>
+            <div class="info-row"><span class="label">Cita-cita</span><span class="value">Editor / Programmer</span></div>
+        </div>
+        <p style="max-width:560px;margin:30px auto 0;text-align:center;color:#b7c2d6;line-height:1.7;font-size:15px;">
+            Aku dikenal jago di bidang <strong style="color:#fff;">editing foto</strong> — mulai dari
+            bikin poster, sampul, sampai desain-desain lain. Kalau ketemu aku,
+            ciri khas yang paling gampang diinget: aku selalu pakai
+            <strong style="color:#2196f3;">kacamata! 👓</strong>
+        </p>
+    </section>
+
+    <!-- ===== HOBI ===== -->
+    <section id="hobi">
+        <h2 class="section-title">Hobi & <span>Minat</span></h2>
+        <p class="section-sub">Hal-hal yang bikin aku semangat</p>
+        <div class="grid">
+            <div class="card">
+                <div class="icon">💻</div>
+                <h3>Ngoding Web</h3>
+                <p>Bikin & ngedit halaman website dari nol</p>
+            </div>
+            <div class="card">
+                <div class="icon">🖼️</div>
+                <h3>Editing Foto</h3>
+                <p>Bikin poster, sampul, dan desain grafis lainnya</p>
+            </div>
+            <div class="card">
+                <div class="icon">🎨</div>
+                <h3>Desain Tampilan</h3>
+                <p>Otak-atik warna dan layout biar makin rapi</p>
+            </div>
+            <div class="card">
+                <div class="icon">🎬</div>
+                <h3>TikTok</h3>
+                <p>Bikin konten & lihat video-video seru</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAVORIT ===== -->
+    <section id="favorit">
+        <h2 class="section-title">Hal <span>Favorit</span></h2>
+        <p class="section-sub">Kesukaan sehari-hari</p>
+        <div class="fav-grid">
+            <div class="fav-card">
+                <div class="icon">🎨</div>
+                <div class="cat">Warna</div>
+                <div class="val">Hijau & Biru</div>
+            </div>
+            <div class="fav-card">
+                <div class="icon">🍗</div>
+                <div class="cat">Makanan</div>
+                <div class="val">Ayam & Telur</div>
+            </div>
+            <div class="fav-card">
+                <div class="icon">🥤</div>
+                <div class="cat">Minuman</div>
+                <div class="val">Es Susu Coklat & Es Teh</div>
+            </div>
+            <div class="fav-card">
+                <div class="icon">⭐</div>
+                <div class="cat">Cita-cita</div>
+                <div class="val">Editor / Programmer</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== KONTAK ===== -->
+    <section id="kontak">
+        <h2 class="section-title">Hubungi <span>Aku</span></h2>
+        <p class="section-sub">Yuk terhubung di sosial media</p>
+        <div class="contact-wrap">
+            <a href="https://wa.me/6282227889155" class="contact-btn" target="_blank">
+                <span class="icon">📱</span> WhatsApp
+            </a>
+            <a href="https://tiktok.com/@sowdkn" class="contact-btn" target="_blank">
+                <span class="icon">🎵</span> TikTok @sowdkn
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 Alfito Ghavin Setyadi. Dibuat dengan Acode.
+    </footer>
+
+</body>
+  </html>
